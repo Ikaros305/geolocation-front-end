@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase-firestore.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+    crossorigin="anonymous">
+  <link rel="stylesheet" href="css/style.css">
+  <title>Geolocation Front End</title>
+</head>
+
+<body>
+  <div class="alert alert-danger serverdownalert"></div>
+  <div class="main-bg" id="main-bg">
+    <form id="form">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" id="name" placeholder="Enter Your Name">
+      </div>
+      <div class="button">
+        <button type="submit" class="btn btn-primary" id="button">Lets go!</button>
+      </div>
+    </form>
+  </div>
+  
+  <div class="alert alert-primary success-hide"></div>
+  <div class="alert alert-danger serverdownalert"></div>
+  <div id="map"></div>
+  <script src="./js/db.js"></script>
+  <script src="./js/dist/index.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-hOgqr7l_M07NmIT6UCafmxSq8-H6bOo" async defer></script>
+</body>
+
+</html>
