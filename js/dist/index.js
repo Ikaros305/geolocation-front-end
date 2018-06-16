@@ -111,11 +111,11 @@ module.exports = {
     }, 8000);
   }
 };
-},{}],9:[function(require,module,exports) {
+},{}],10:[function(require,module,exports) {
 module.exports = {
   markersarray: []
 };
-},{}],10:[function(require,module,exports) {
+},{}],9:[function(require,module,exports) {
 'use strict';
 
 var _markers = require('./markers');
@@ -164,7 +164,7 @@ module.exports = {
     });
   }
 };
-},{"./markers":9}],4:[function(require,module,exports) {
+},{"./markers":10}],4:[function(require,module,exports) {
 userId = function (_userId) {
     function userId() {
         return _userId.apply(this, arguments);
@@ -266,7 +266,7 @@ form.addEventListener('submit', function (e) {
   (0, _map.initMap)();
   e.preventDefault();
 });
-},{"./disconnected":8,"./map":10,"./userId":4,"./markers":9,"./socket":5,"./socketConnectionCheck":11}],3:[function(require,module,exports) {
+},{"./disconnected":8,"./map":9,"./userId":4,"./markers":10,"./socket":5,"./socketConnectionCheck":11}],3:[function(require,module,exports) {
 module.exports = {
   alertMessage: function alertMessage(message) {
     var div = document.getElementsByClassName('success-hide');
@@ -304,7 +304,7 @@ module.exports = {
     });
   })
 };
-},{"./markers":9,"./socket":5,"./disconnected":8}],7:[function(require,module,exports) {
+},{"./markers":10,"./socket":5,"./disconnected":8}],7:[function(require,module,exports) {
 'use strict';
 
 var _userId = require('./userId');
@@ -367,7 +367,7 @@ db.collection('geolocation').onSnapshot(function (snapshot) {
     });
   }
 });
-},{"./formhandle":2,"./success":3,"./userId":4,"./socket":5,"./handledisconnect":6,"./geolocationUpdate":7}],24:[function(require,module,exports) {
+},{"./formhandle":2,"./success":3,"./userId":4,"./socket":5,"./handledisconnect":6,"./geolocationUpdate":7}],12:[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 
@@ -394,9 +394,9 @@ module.bundle.Module = Module;
 
 var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
-  var hostname = undefined || location.hostname;
+  var hostname = '' || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + '57435' + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + '61327' + '/');
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
 
@@ -537,5 +537,5 @@ function hmrAccept(bundle, id) {
     return hmrAccept(global.parcelRequire, id);
   });
 }
-},{}]},{},[24,1], null)
+},{}]},{},[12,1], null)
 //# sourceMappingURL=/index.map
