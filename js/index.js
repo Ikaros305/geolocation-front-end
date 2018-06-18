@@ -5,9 +5,11 @@ import socket from './socket';
 import { handledisconnect } from './handledisconnect';
 import { showPosition } from './geolocationUpdate';
 
-// get position of user
+// get position of user every 5 seconds
 if (navigator.geolocation) {
-  navigator.geolocation.watchPosition(showPosition);
+  setInterval(function(){
+    navigator.geolocation.getCurrentPosition(showPosition);
+  }, 5000);
 } else {
   alert('Geolocation is not supported by this browser.');
 }

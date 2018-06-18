@@ -17,7 +17,12 @@ module.exports = {
     serverDownAlert[0].style.display = 'block';
     body[0].classList.add('spinner-1');
     form.style.display = 'none';
-    serverDownAlert[0].innerText = 'Server Down Please wait while connect again';
+    serverDownAlert[0].innerText = 'Server down please wait while connect again';
+    db.collection("onlineusers").doc(socketId.socketId[0]).delete().then(function () {
+    })
+  }),
+
+  socketDisconnect: socket.on('disconnect', function(){
     db.collection("onlineusers").doc(socketId.socketId[0]).delete().then(function () {
     })
   }),
@@ -27,7 +32,7 @@ module.exports = {
     form.style.display = 'block';
     serverDownAlert[0].style.display = 'none';
     socketId.socketId.push(socket.id);
-    db.collection("onlineusers").doc(socketId.socketId[0]).set({
+    db.collection("onlineusers").doc(socket.id).set({
       userId: idtostring2,
       socketid: socket.id
     })

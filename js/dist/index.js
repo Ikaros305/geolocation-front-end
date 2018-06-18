@@ -184,7 +184,7 @@ module.exports = {
 };
 },{}],5:[function(require,module,exports) {
 module.exports = {
-  socket: io.connect('https://geolocation-comunit.herokuapp.com/'),
+  socket: io.connect('http://localhost:4000'),
   socketId: []
 };
 },{}],11:[function(require,module,exports) {
@@ -210,7 +210,11 @@ module.exports = {
     serverDownAlert[0].style.display = 'block';
     body[0].classList.add('spinner-1');
     form.style.display = 'none';
-    serverDownAlert[0].innerText = 'Server Down Please wait while connect again';
+    serverDownAlert[0].innerText = 'Server down please wait while connect again';
+    db.collection("onlineusers").doc(_socket2.default.socketId[0]).delete().then(function () {});
+  }),
+
+  socketDisconnect: _socket.socket.on('disconnect', function () {
     db.collection("onlineusers").doc(_socket2.default.socketId[0]).delete().then(function () {});
   }),
 
@@ -219,7 +223,7 @@ module.exports = {
     form.style.display = 'block';
     serverDownAlert[0].style.display = 'none';
     _socket2.default.socketId.push(_socket.socket.id);
-    db.collection("onlineusers").doc(_socket2.default.socketId[0]).set({
+    db.collection("onlineusers").doc(_socket.socket.id).set({
       userId: idtostring2,
       socketid: _socket.socket.id
     });
@@ -309,12 +313,13 @@ module.exports = {
 
 var _userId = require('./userId');
 
+var idtostring = String(_userId.id);
 module.exports = {
   showPosition:
   //  update it main functionality
   function showPosition(position) {
     // find user by userId
-    db.collection('geolocation').where('userId', '==', _userId.id).get().then(function (snapshot) {
+    db.collection('geolocation').where('userId', '==', idtostring).get().then(function (snapshot) {
       snapshot.docs.forEach(function (doc) {
         var userId = doc.id;
         // update location 
@@ -347,9 +352,11 @@ var _geolocationUpdate = require('./geolocationUpdate');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// get position of user
+// get position of user every 5 seconds
 if (navigator.geolocation) {
-  navigator.geolocation.watchPosition(_geolocationUpdate.showPosition);
+  setInterval(function () {
+    navigator.geolocation.getCurrentPosition(_geolocationUpdate.showPosition);
+  }, 5000);
 } else {
   alert('Geolocation is not supported by this browser.');
 }
@@ -367,7 +374,7 @@ db.collection('geolocation').onSnapshot(function (snapshot) {
     });
   }
 });
-},{"./formhandle":2,"./success":3,"./userId":4,"./socket":5,"./handledisconnect":6,"./geolocationUpdate":7}],12:[function(require,module,exports) {
+},{"./formhandle":2,"./success":3,"./userId":4,"./socket":5,"./handledisconnect":6,"./geolocationUpdate":7}],17:[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 
@@ -396,7 +403,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = '' || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + '61327' + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + '60696' + '/');
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
 
@@ -537,5 +544,5 @@ function hmrAccept(bundle, id) {
     return hmrAccept(global.parcelRequire, id);
   });
 }
-},{}]},{},[12,1], null)
+},{}]},{},[17,1], null)
 //# sourceMappingURL=/index.map
