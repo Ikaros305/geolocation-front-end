@@ -1,4 +1,4 @@
 module.exports = {
-  socket: io.connect('http://localhost:4000'),
+  socket: io.connect('https://geolocation-comunit.herokuapp.com/'),
   socketId: []
 }

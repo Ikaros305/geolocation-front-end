@@ -98,7 +98,7 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   // Override the current require with this new one
   return newRequire;
-})({8:[function(require,module,exports) {
+})({15:[function(require,module,exports) {
 module.exports = {
   disconnectedMessage: function disconnectedMessage(message) {
     var div = document.getElementsByClassName('success-hide');
@@ -111,11 +111,11 @@ module.exports = {
     }, 8000);
   }
 };
-},{}],10:[function(require,module,exports) {
+},{}],17:[function(require,module,exports) {
 module.exports = {
   markersarray: []
 };
-},{}],4:[function(require,module,exports) {
+},{}],5:[function(require,module,exports) {
 userId = function (_userId) {
     function userId() {
         return _userId.apply(this, arguments);
@@ -133,7 +133,7 @@ userId = function (_userId) {
 module.exports = {
     id: userId()
 };
-},{}],9:[function(require,module,exports) {
+},{}],16:[function(require,module,exports) {
 'use strict';
 
 var _markers = require('./markers');
@@ -187,16 +187,16 @@ module.exports = {
     });
   }
 };
-},{"./markers":10,"./userId":4}],5:[function(require,module,exports) {
+},{"./markers":17,"./userId":5}],6:[function(require,module,exports) {
 module.exports = {
-  socket: io.connect('http://localhost:4000'),
+  socket: io.connect('https://geolocation-comunit.herokuapp.com/'),
   socketId: []
 };
-},{}],22:[function(require,module,exports) {
+},{}],19:[function(require,module,exports) {
 module.exports = {
   nameOfUser: []
 };
-},{}],11:[function(require,module,exports) {
+},{}],18:[function(require,module,exports) {
 'use strict';
 
 var _socket = require('./socket');
@@ -254,7 +254,7 @@ module.exports = {
     });
   })
 };
-},{"./socket":5,"./userId":4,"./checkformsubmited":22,"./markers":10}],2:[function(require,module,exports) {
+},{"./socket":6,"./userId":5,"./checkformsubmited":19,"./markers":17}],3:[function(require,module,exports) {
 'use strict';
 
 var _disconnected = require('./disconnected');
@@ -298,7 +298,7 @@ form.addEventListener('submit', function (e) {
   (0, _map.initMap)();
   e.preventDefault();
 });
-},{"./disconnected":8,"./map":9,"./userId":4,"./markers":10,"./socket":5,"./socketConnectionCheck":11,"./checkformsubmited":22}],3:[function(require,module,exports) {
+},{"./disconnected":15,"./map":16,"./userId":5,"./markers":17,"./socket":6,"./socketConnectionCheck":18,"./checkformsubmited":19}],4:[function(require,module,exports) {
 module.exports = {
   alertMessage: function alertMessage(message) {
     var div = document.getElementsByClassName('success-hide');
@@ -313,7 +313,7 @@ module.exports = {
     }, 8000);
   }
 };
-},{}],6:[function(require,module,exports) {
+},{}],7:[function(require,module,exports) {
 'use strict';
 
 var _markers = require('./markers');
@@ -336,7 +336,7 @@ module.exports = {
     });
   })
 };
-},{"./markers":10,"./socket":5,"./disconnected":8}],7:[function(require,module,exports) {
+},{"./markers":17,"./socket":6,"./disconnected":15}],8:[function(require,module,exports) {
 'use strict';
 
 var _userId = require('./userId');
@@ -359,7 +359,7 @@ module.exports = {
     });
   }
 };
-},{"./userId":4}],1:[function(require,module,exports) {
+},{"./userId":5}],1:[function(require,module,exports) {
 'use strict';
 
 var _formhandle = require('./formhandle');
@@ -402,7 +402,7 @@ db.collection('geolocation').onSnapshot(function (snapshot) {
     });
   }
 });
-},{"./formhandle":2,"./success":3,"./userId":4,"./socket":5,"./handledisconnect":6,"./geolocationUpdate":7}],26:[function(require,module,exports) {
+},{"./formhandle":3,"./success":4,"./userId":5,"./socket":6,"./handledisconnect":7,"./geolocationUpdate":8}],25:[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 
@@ -429,9 +429,9 @@ module.bundle.Module = Module;
 
 var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
-  var hostname = undefined || location.hostname;
+  var hostname = '' || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + '63828' + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + '49362' + '/');
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
 
@@ -572,5 +572,5 @@ function hmrAccept(bundle, id) {
     return hmrAccept(global.parcelRequire, id);
   });
 }
-},{}]},{},[26,1], null)
+},{}]},{},[25,1], null)
 //# sourceMappingURL=/index.map
