@@ -572,5 +572,5 @@ function hmrAccept(bundle, id) {
     return hmrAccept(global.parcelRequire, id);
   });
 }
-},{}]}{},[26,1], null)
+}{}]},{},[26,1], null)
 //# sourceMappingURL=/index.map
