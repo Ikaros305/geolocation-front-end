@@ -115,10 +115,32 @@ module.exports = {
 module.exports = {
   markersarray: []
 };
+},{}],4:[function(require,module,exports) {
+userId = function (_userId) {
+    function userId() {
+        return _userId.apply(this, arguments);
+    }
+
+    userId.toString = function () {
+        return _userId.toString();
+    };
+
+    return userId;
+}(function () {
+    userId = Math.floor(Math.random() * 10000000000000000000 + 1);
+    return userId;
+});
+module.exports = {
+    id: userId()
+};
 },{}],9:[function(require,module,exports) {
 'use strict';
 
 var _markers = require('./markers');
+
+var _userId = require('./userId');
+
+var idtostring2 = String(_userId.id);
 
 module.exports = {
   initMap: function initMap() {
@@ -146,6 +168,7 @@ module.exports = {
             lng: change.doc.data().lng
           });
           marker.set('id', change.doc.id);
+          marker.set('userId', idtostring2);
           _markers.markersarray.push(marker);
         } else if (change.type == 'modified') {
           // get modified id of document
@@ -164,28 +187,14 @@ module.exports = {
     });
   }
 };
-},{"./markers":10}],4:[function(require,module,exports) {
-userId = function (_userId) {
-    function userId() {
-        return _userId.apply(this, arguments);
-    }
-
-    userId.toString = function () {
-        return _userId.toString();
-    };
-
-    return userId;
-}(function () {
-    userId = Math.floor(Math.random() * 10000000000000000000 + 1);
-    return userId;
-});
-module.exports = {
-    id: userId()
-};
-},{}],5:[function(require,module,exports) {
+},{"./markers":10,"./userId":4}],5:[function(require,module,exports) {
 module.exports = {
   socket: io.connect('http://localhost:4000'),
   socketId: []
+};
+},{}],22:[function(require,module,exports) {
+module.exports = {
+  nameOfUser: []
 };
 },{}],11:[function(require,module,exports) {
 'use strict';
@@ -195,6 +204,10 @@ var _socket = require('./socket');
 var _socket2 = _interopRequireDefault(_socket);
 
 var _userId = require('./userId');
+
+var _checkformsubmited = require('./checkformsubmited');
+
+var _markers = require('./markers');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -210,12 +223,14 @@ module.exports = {
     serverDownAlert[0].style.display = 'block';
     body[0].classList.add('spinner-1');
     form.style.display = 'none';
-    serverDownAlert[0].innerText = 'Server down please wait while connect again';
+    serverDownAlert[0].innerText = 'No internet connection can be found!';
     db.collection("onlineusers").doc(_socket2.default.socketId[0]).delete().then(function () {});
-  }),
-
-  socketDisconnect: _socket.socket.on('disconnect', function () {
-    db.collection("onlineusers").doc(_socket2.default.socketId[0]).delete().then(function () {});
+    db.collection("geolocation").doc(idtostring2).delete().then(function () {});
+    _markers.markersarray.forEach(function (marker) {
+      if (marker.userId == idtostring2) {
+        marker.setMap(null);
+      }
+    });
   }),
 
   ConnectionUp: _socket.socket.on('connect', function () {
@@ -226,10 +241,20 @@ module.exports = {
     db.collection("onlineusers").doc(_socket.socket.id).set({
       userId: idtostring2,
       socketid: _socket.socket.id
+    }).then(function () {
+      console.log(_checkformsubmited.nameOfUser);
+      if (_checkformsubmited.nameOfUser.length == 1) {
+        db.collection("geolocation").doc(idtostring2).set({
+          name: _checkformsubmited.nameOfUser["0"],
+          lat: 51.507351,
+          lng: -0.127758,
+          userId: idtostring2
+        });
+      }
     });
   })
 };
-},{"./socket":5,"./userId":4}],2:[function(require,module,exports) {
+},{"./socket":5,"./userId":4,"./checkformsubmited":22,"./markers":10}],2:[function(require,module,exports) {
 'use strict';
 
 var _disconnected = require('./disconnected');
@@ -246,6 +271,8 @@ var _socket = require('./socket');
 
 var _socketConnectionCheck = require('./socketConnectionCheck');
 
+var _checkformsubmited = require('./checkformsubmited');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var idtostring = String(_userId.id);
@@ -255,6 +282,7 @@ var formdiv = document.getElementById('main-bg');
 
 form.addEventListener('submit', function (e) {
   var name = document.getElementById('name').value;
+  _checkformsubmited.nameOfUser.push(name);
   // remove main main-bg
   formdiv.style.display = "none";
   // set map height
@@ -270,7 +298,7 @@ form.addEventListener('submit', function (e) {
   (0, _map.initMap)();
   e.preventDefault();
 });
-},{"./disconnected":8,"./map":9,"./userId":4,"./markers":10,"./socket":5,"./socketConnectionCheck":11}],3:[function(require,module,exports) {
+},{"./disconnected":8,"./map":9,"./userId":4,"./markers":10,"./socket":5,"./socketConnectionCheck":11,"./checkformsubmited":22}],3:[function(require,module,exports) {
 module.exports = {
   alertMessage: function alertMessage(message) {
     var div = document.getElementsByClassName('success-hide');
@@ -374,7 +402,7 @@ db.collection('geolocation').onSnapshot(function (snapshot) {
     });
   }
 });
-},{"./formhandle":2,"./success":3,"./userId":4,"./socket":5,"./handledisconnect":6,"./geolocationUpdate":7}],17:[function(require,module,exports) {
+},{"./formhandle":2,"./success":3,"./userId":4,"./socket":5,"./handledisconnect":6,"./geolocationUpdate":7}],26:[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 
@@ -401,9 +429,9 @@ module.bundle.Module = Module;
 
 var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
-  var hostname = '' || location.hostname;
+  var hostname = undefined || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + '60696' + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + '63828' + '/');
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
 
@@ -544,5 +572,5 @@ function hmrAccept(bundle, id) {
     return hmrAccept(global.parcelRequire, id);
   });
 }
-},{}]},{},[17,1], null)
+},{}]},{},[26,1], null)
 //# sourceMappingURL=/index.map

@@ -1,4 +1,8 @@
 import { markersarray } from './markers';
+import {
+  id
+} from './userId';
+var idtostring2 = String(id);
 
 module.exports = {
   initMap: function () {
@@ -27,6 +31,7 @@ module.exports = {
             lng: change.doc.data().lng
           });
           marker.set('id', change.doc.id);
+          marker.set('userId', idtostring2);
           markersarray.push(marker);
         } else if (change.type == 'modified') {
           // get modified id of document

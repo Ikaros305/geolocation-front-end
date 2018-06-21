@@ -4,7 +4,7 @@ import { id } from './userId';
 import markersarray from './markers';
 import { socket } from './socket';
 import { serverDownCheck, ConnectionUp } from './socketConnectionCheck';
-
+import { nameOfUser } from './checkformsubmited';
 
 var idtostring = String(id);
 
@@ -13,6 +13,7 @@ let formdiv = document.getElementById('main-bg');
 
 form.addEventListener('submit', (e) => {
   let name = document.getElementById('name').value;
+  nameOfUser.push(name);
   // remove main main-bg
   formdiv.style.display = "none";
   // set map height
