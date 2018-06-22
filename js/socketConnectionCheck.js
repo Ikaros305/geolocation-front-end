@@ -40,7 +40,6 @@ module.exports = {
       userId: idtostring2,
       socketid: socket.id
     }).then(function () {
-      console.log(nameOfUser);
       if (nameOfUser.length == 1) {
         db.collection("geolocation").doc(idtostring2).set({
           name: nameOfUser["0"],

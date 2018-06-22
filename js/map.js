@@ -1,4 +1,6 @@
-import { markersarray } from './markers';
+import {
+  markersarray
+} from './markers';
 import {
   id
 } from './userId';

@@ -11,7 +11,7 @@ module.exports = {
         // update location 
         db.collection('geolocation').doc(userId).update({
           lat: position.coords.latitude,
-          lng: position.coords.longitude,
+          lng: position.coords.longitude
         });
       });
     });

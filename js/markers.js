@@ -1,3 +1,4 @@
 module.exports = {
-  markersarray: []
+  markersarray: [],
+  initialLocation: []
 }

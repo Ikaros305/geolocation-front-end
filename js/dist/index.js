@@ -98,7 +98,7 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   // Override the current require with this new one
   return newRequire;
-})({15:[function(require,module,exports) {
+})({9:[function(require,module,exports) {
 module.exports = {
   disconnectedMessage: function disconnectedMessage(message) {
     var div = document.getElementsByClassName('success-hide');
@@ -111,11 +111,12 @@ module.exports = {
     }, 8000);
   }
 };
-},{}],17:[function(require,module,exports) {
+},{}],8:[function(require,module,exports) {
 module.exports = {
-  markersarray: []
+  markersarray: [],
+  initialLocation: []
 };
-},{}],5:[function(require,module,exports) {
+},{}],4:[function(require,module,exports) {
 userId = function (_userId) {
     function userId() {
         return _userId.apply(this, arguments);
@@ -133,7 +134,7 @@ userId = function (_userId) {
 module.exports = {
     id: userId()
 };
-},{}],16:[function(require,module,exports) {
+},{}],10:[function(require,module,exports) {
 'use strict';
 
 var _markers = require('./markers');
@@ -187,16 +188,16 @@ module.exports = {
     });
   }
 };
-},{"./markers":17,"./userId":5}],6:[function(require,module,exports) {
+},{"./markers":8,"./userId":4}],5:[function(require,module,exports) {
 module.exports = {
   socket: io.connect('https://geolocation-comunit.herokuapp.com/'),
   socketId: []
 };
-},{}],19:[function(require,module,exports) {
+},{}],12:[function(require,module,exports) {
 module.exports = {
   nameOfUser: []
 };
-},{}],18:[function(require,module,exports) {
+},{}],11:[function(require,module,exports) {
 'use strict';
 
 var _socket = require('./socket');
@@ -242,7 +243,6 @@ module.exports = {
       userId: idtostring2,
       socketid: _socket.socket.id
     }).then(function () {
-      console.log(_checkformsubmited.nameOfUser);
       if (_checkformsubmited.nameOfUser.length == 1) {
         db.collection("geolocation").doc(idtostring2).set({
           name: _checkformsubmited.nameOfUser["0"],
@@ -254,7 +254,7 @@ module.exports = {
     });
   })
 };
-},{"./socket":6,"./userId":5,"./checkformsubmited":19,"./markers":17}],3:[function(require,module,exports) {
+},{"./socket":5,"./userId":4,"./checkformsubmited":12,"./markers":8}],2:[function(require,module,exports) {
 'use strict';
 
 var _disconnected = require('./disconnected');
@@ -292,28 +292,38 @@ form.addEventListener('submit', function (e) {
     name: name,
     lat: 51.507351,
     lng: -0.127758,
+    accuracy: 0,
     userId: idtostring
   });
   // initilize map
   (0, _map.initMap)();
   e.preventDefault();
 });
-},{"./disconnected":15,"./map":16,"./userId":5,"./markers":17,"./socket":6,"./socketConnectionCheck":18,"./checkformsubmited":19}],4:[function(require,module,exports) {
+},{"./disconnected":9,"./map":10,"./userId":4,"./markers":8,"./socket":5,"./socketConnectionCheck":11,"./checkformsubmited":12}],3:[function(require,module,exports) {
+'use strict';
+
+var _checkformsubmited = require('./checkformsubmited');
+
 module.exports = {
   alertMessage: function alertMessage(message) {
-    var div = document.getElementsByClassName('success-hide');
-    if (div[0].classList.contains('alert-danger')) {
-      div[0].classList.remove('alert-danger');
-      div[0].classList.add('alert-primary');
+    // if statement to avoid alert message showing on first screen
+    if (_checkformsubmited.nameOfUser.length === 0) {
+      //if form not submitted this will take care of it and won't show any alert
+    } else {
+      var div = document.getElementsByClassName('success-hide');
+      if (div[0].classList.contains('alert-danger')) {
+        div[0].classList.remove('alert-danger');
+        div[0].classList.add('alert-primary');
+      }
+      div[0].style.display = "block";
+      div[0].innerText = message;
+      setTimeout(function () {
+        div[0].style.display = "none";
+      }, 8000);
     }
-    div[0].style.display = "block";
-    div[0].innerText = message;
-    setTimeout(function () {
-      div[0].style.display = "none";
-    }, 8000);
   }
 };
-},{}],7:[function(require,module,exports) {
+},{"./checkformsubmited":12}],7:[function(require,module,exports) {
 'use strict';
 
 var _markers = require('./markers');
@@ -336,7 +346,7 @@ module.exports = {
     });
   })
 };
-},{"./markers":17,"./socket":6,"./disconnected":15}],8:[function(require,module,exports) {
+},{"./markers":8,"./socket":5,"./disconnected":9}],6:[function(require,module,exports) {
 'use strict';
 
 var _userId = require('./userId');
@@ -359,7 +369,7 @@ module.exports = {
     });
   }
 };
-},{"./userId":5}],1:[function(require,module,exports) {
+},{"./userId":4}],1:[function(require,module,exports) {
 'use strict';
 
 var _formhandle = require('./formhandle');
@@ -380,29 +390,37 @@ var _geolocationUpdate = require('./geolocationUpdate');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// get position of user every 5 seconds
+// get position of user every 2 seconds
 if (navigator.geolocation) {
   setInterval(function () {
     navigator.geolocation.getCurrentPosition(_geolocationUpdate.showPosition);
-  }, 5000);
+  }, 2000);
 } else {
   alert('Geolocation is not supported by this browser.');
 }
 
-// functionality for alert messages
 db.collection('geolocation').onSnapshot(function (snapshot) {
+  var num = snapshot.docs.length;
   var changes = snapshot.docChanges();
-  if (changes.length == 1) {
+  if (changes.length > 1) {
     changes.forEach(function (change) {
       if (change.type == 'added') {
         if (change.doc.data().userId == _userId.id == false) {
-          (0, _success.alertMessage)(change.doc.data().name + ' Joined in');
+          (0, _success.alertMessage)(num + ' Joined In');
+        }
+      }
+    });
+  } else {
+    changes.forEach(function (change) {
+      if (change.type == 'added') {
+        if (change.doc.data().userId == _userId.id == false) {
+          (0, _success.alertMessage)(change.doc.data().name + ' Joined In');
         }
       }
     });
   }
 });
-},{"./formhandle":3,"./success":4,"./userId":5,"./socket":6,"./handledisconnect":7,"./geolocationUpdate":8}],25:[function(require,module,exports) {
+},{"./formhandle":2,"./success":3,"./userId":4,"./socket":5,"./handledisconnect":7,"./geolocationUpdate":6}],13:[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 
@@ -431,7 +449,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = '' || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + '49362' + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + '54575' + '/');
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
 
@@ -572,5 +590,5 @@ function hmrAccept(bundle, id) {
     return hmrAccept(global.parcelRequire, id);
   });
 }
-},{}]},{},[25,1], null)
+},{}]},{},[13,1], null)
 //# sourceMappingURL=/index.map

@@ -23,6 +23,7 @@ form.addEventListener('submit', (e) => {
     name: name,
     lat: 51.507351,
     lng: -0.127758,
+    accuracy: 0,
     userId: idtostring
   })
   // initilize map
