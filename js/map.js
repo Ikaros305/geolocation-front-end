@@ -25,9 +25,11 @@ module.exports = {
       changes.forEach(change => {
         if (change.type == 'added') {
           // Create a marker and set its position.
-          var marker = new google.maps.InfoWindow;
-          marker.setContent(change.doc.data().name),
-            marker.open(map);
+          var marker = new google.maps.InfoWindow({
+            content: change.doc.data().name,
+            disableAutoPan: true
+          })
+          marker.open(map);
           marker.setPosition({
             lat: change.doc.data().lat,
             lng: change.doc.data().lng

@@ -23,7 +23,7 @@
     height: 100%;
     background-image: url('../img/map.jpg');
     background-repeat: no-repeat;
-    background-size: 100% 100%;
+    background-size: cover;
   }
 
   form {
@@ -99,6 +99,14 @@
     font-size: 15px;
     width: 70%;
     right: 20%;
+  }
+}
+
+@media only screen and (max-width: 420px) {
+  form {
+    padding: 14px;
+    padding-bottom: 77px;
+    padding-top: 77px;
   }
 }
 

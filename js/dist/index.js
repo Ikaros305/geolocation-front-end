@@ -162,8 +162,11 @@ module.exports = {
       changes.forEach(function (change) {
         if (change.type == 'added') {
           // Create a marker and set its position.
-          var marker = new google.maps.InfoWindow();
-          marker.setContent(change.doc.data().name), marker.open(map);
+          var marker = new google.maps.InfoWindow({
+            content: change.doc.data().name,
+            disableAutoPan: true
+          });
+          marker.open(map);
           marker.setPosition({
             lat: change.doc.data().lat,
             lng: change.doc.data().lng
@@ -420,7 +423,7 @@ db.collection('geolocation').onSnapshot(function (snapshot) {
     });
   }
 });
-},{"./formhandle":2,"./success":3,"./userId":4,"./socket":5,"./handledisconnect":7,"./geolocationUpdate":6}],13:[function(require,module,exports) {
+},{"./formhandle":2,"./success":3,"./userId":4,"./socket":5,"./handledisconnect":7,"./geolocationUpdate":6}],29:[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 
@@ -447,7 +450,7 @@ module.bundle.Module = Module;
 
 var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
-  var hostname = '' || location.hostname;
+  var hostname = undefined || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
   var ws = new WebSocket(protocol + '://' + hostname + ':' + '54575' + '/');
   ws.onmessage = function (event) {
@@ -590,5 +593,5 @@ function hmrAccept(bundle, id) {
     return hmrAccept(global.parcelRequire, id);
   });
 }
-},{}]},{},[13,1], null)
+},{}]},{},[29,1], null)
 //# sourceMappingURL=/index.map
