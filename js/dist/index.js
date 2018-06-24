@@ -98,7 +98,7 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   // Override the current require with this new one
   return newRequire;
-})({9:[function(require,module,exports) {
+})({8:[function(require,module,exports) {
 module.exports = {
   disconnectedMessage: function disconnectedMessage(message) {
     var div = document.getElementsByClassName('success-hide');
@@ -111,7 +111,7 @@ module.exports = {
     }, 8000);
   }
 };
-},{}],8:[function(require,module,exports) {
+},{}],10:[function(require,module,exports) {
 module.exports = {
   markersarray: [],
   initialLocation: []
@@ -134,7 +134,7 @@ userId = function (_userId) {
 module.exports = {
     id: userId()
 };
-},{}],10:[function(require,module,exports) {
+},{}],9:[function(require,module,exports) {
 'use strict';
 
 var _markers = require('./markers');
@@ -161,12 +161,24 @@ module.exports = {
       var changes = snapshot.docChanges();
       changes.forEach(function (change) {
         if (change.type == 'added') {
-          // Create a marker and set its position.
-          var marker = new google.maps.InfoWindow({
-            content: change.doc.data().name,
-            disableAutoPan: true
-          });
-          marker.open(map);
+          console.log(change.doc.data().userId);
+          if (change.doc.data().userId == idtostring2) {
+            // Create a marker and set its position.
+            var marker = new google.maps.Marker({
+              icon: '../img/map-icon.png',
+              content: change.doc.data().name,
+              disableAutoPan: true,
+              map: map
+            });
+          } else {
+            // Create a marker and set its position.
+            var marker = new google.maps.InfoWindow({
+              content: change.doc.data().name,
+              disableAutoPan: true,
+              map: map
+            });
+          }
+
           marker.setPosition({
             lat: change.doc.data().lat,
             lng: change.doc.data().lng
@@ -191,7 +203,7 @@ module.exports = {
     });
   }
 };
-},{"./markers":8,"./userId":4}],5:[function(require,module,exports) {
+},{"./markers":10,"./userId":4}],5:[function(require,module,exports) {
 module.exports = {
   socket: io.connect('https://geolocation-comunit.herokuapp.com/'),
   socketId: []
@@ -257,7 +269,7 @@ module.exports = {
     });
   })
 };
-},{"./socket":5,"./userId":4,"./checkformsubmited":12,"./markers":8}],2:[function(require,module,exports) {
+},{"./socket":5,"./userId":4,"./checkformsubmited":12,"./markers":10}],2:[function(require,module,exports) {
 'use strict';
 
 var _disconnected = require('./disconnected');
@@ -302,7 +314,7 @@ form.addEventListener('submit', function (e) {
   (0, _map.initMap)();
   e.preventDefault();
 });
-},{"./disconnected":9,"./map":10,"./userId":4,"./markers":8,"./socket":5,"./socketConnectionCheck":11,"./checkformsubmited":12}],3:[function(require,module,exports) {
+},{"./disconnected":8,"./map":9,"./userId":4,"./markers":10,"./socket":5,"./socketConnectionCheck":11,"./checkformsubmited":12}],3:[function(require,module,exports) {
 'use strict';
 
 var _checkformsubmited = require('./checkformsubmited');
@@ -326,7 +338,7 @@ module.exports = {
     }
   }
 };
-},{"./checkformsubmited":12}],7:[function(require,module,exports) {
+},{"./checkformsubmited":12}],6:[function(require,module,exports) {
 'use strict';
 
 var _markers = require('./markers');
@@ -349,7 +361,7 @@ module.exports = {
     });
   })
 };
-},{"./markers":8,"./socket":5,"./disconnected":9}],6:[function(require,module,exports) {
+},{"./markers":10,"./socket":5,"./disconnected":8}],7:[function(require,module,exports) {
 'use strict';
 
 var _userId = require('./userId');
@@ -423,7 +435,7 @@ db.collection('geolocation').onSnapshot(function (snapshot) {
     });
   }
 });
-},{"./formhandle":2,"./success":3,"./userId":4,"./socket":5,"./handledisconnect":7,"./geolocationUpdate":6}],29:[function(require,module,exports) {
+},{"./formhandle":2,"./success":3,"./userId":4,"./socket":5,"./handledisconnect":6,"./geolocationUpdate":7}],16:[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 
@@ -450,9 +462,9 @@ module.bundle.Module = Module;
 
 var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
-  var hostname = undefined || location.hostname;
+  var hostname = '' || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + '54575' + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + '59482' + '/');
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
 
@@ -593,5 +605,5 @@ function hmrAccept(bundle, id) {
     return hmrAccept(global.parcelRequire, id);
   });
 }
-},{}]},{},[29,1], null)
+},{}]},{},[16,1], null)
 //# sourceMappingURL=/index.map

@@ -1,7 +1,3 @@
-  /* #map {
-    height: 100%;
-  } */
-
   html,
   body {
     height: 100%;
@@ -76,7 +72,7 @@
     animation: spinner 0.7s linear infinite;
     z-index: 1;
   }
-  
+
   @keyframes spinner {
     to {
       transform: rotate(360deg);
@@ -109,4 +105,7 @@
     padding-top: 77px;
   }
 }
+
+
+
 

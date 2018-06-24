@@ -24,12 +24,24 @@ module.exports = {
       let changes = snapshot.docChanges();
       changes.forEach(change => {
         if (change.type == 'added') {
-          // Create a marker and set its position.
-          var marker = new google.maps.InfoWindow({
-            content: change.doc.data().name,
-            disableAutoPan: true
-          })
-          marker.open(map);
+          console.log(change.doc.data().userId)
+          if (change.doc.data().userId == idtostring2) {
+            // Create a marker and set its position.
+            var marker = new google.maps.Marker({
+              icon: '../img/map-icon.png',
+              content: change.doc.data().name,
+              disableAutoPan: true,
+              map: map,
+            })
+          } else {
+            // Create a marker and set its position.
+            var marker = new google.maps.InfoWindow({
+              content: change.doc.data().name,
+              disableAutoPan: true,
+              map: map,
+            })
+          }
+
           marker.setPosition({
             lat: change.doc.data().lat,
             lng: change.doc.data().lng
