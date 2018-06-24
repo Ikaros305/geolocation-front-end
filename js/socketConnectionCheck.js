@@ -25,7 +25,7 @@ module.exports = {
     db.collection("onlineusers").doc(socketId.socketId[0]).delete().then(function () {})
     db.collection("geolocation").doc(idtostring2).delete().then(function () {})
     markersarray.forEach(marker => {
-      if (marker.userId == idtostring2) {
+      if (marker.id === idtostring2) {
         marker.setMap(null);
       }
     });
@@ -35,6 +35,7 @@ module.exports = {
     body[0].classList.remove('spinner-1');
     form.style.display = 'block';
     serverDownAlert[0].style.display = 'none';
+    socketId.socketId.splice(0,socketId.socketId.length);
     socketId.socketId.push(socket.id);
     db.collection("onlineusers").doc(socket.id).set({
       userId: idtostring2,

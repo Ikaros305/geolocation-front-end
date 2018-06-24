@@ -24,7 +24,6 @@ module.exports = {
       let changes = snapshot.docChanges();
       changes.forEach(change => {
         if (change.type == 'added') {
-          console.log(change.doc.data().userId)
           if (change.doc.data().userId == idtostring2) {
             // Create a marker and set its position.
             var marker = new google.maps.Marker({
