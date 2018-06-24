@@ -165,7 +165,7 @@ module.exports = {
           if (change.doc.data().userId == idtostring2) {
             // Create a marker and set its position.
             var marker = new google.maps.Marker({
-              icon: '../img/map-icon.png',
+              icon: './img/map-icon.png',
               content: change.doc.data().name,
               disableAutoPan: true,
               map: map
