@@ -98,7 +98,7 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   // Override the current require with this new one
   return newRequire;
-})({10:[function(require,module,exports) {
+})({9:[function(require,module,exports) {
 module.exports = {
   disconnectedMessage: function disconnectedMessage(message) {
     var div = document.getElementsByClassName('success-hide');
@@ -111,7 +111,7 @@ module.exports = {
     }, 8000);
   }
 };
-},{}],12:[function(require,module,exports) {
+},{}],11:[function(require,module,exports) {
 module.exports = {
   markersarray: [],
   initialLocation: []
@@ -134,7 +134,7 @@ userId = function (_userId) {
 module.exports = {
     id: userId()
 };
-},{}],11:[function(require,module,exports) {
+},{}],10:[function(require,module,exports) {
 'use strict';
 
 var _markers = require('./markers');
@@ -202,18 +202,18 @@ module.exports = {
     });
   }
 };
-},{"./markers":12,"./userId":4}],7:[function(require,module,exports) {
+},{"./markers":11,"./userId":4}],5:[function(require,module,exports) {
 module.exports = {
   socket: io.connect('https://geolocation-comunit.herokuapp.com'),
   socketId: []
   // https://geolocation-comunit.herokuapp.com/
 
 };
-},{}],9:[function(require,module,exports) {
+},{}],8:[function(require,module,exports) {
 module.exports = {
   nameOfUser: []
 };
-},{}],13:[function(require,module,exports) {
+},{}],12:[function(require,module,exports) {
 'use strict';
 
 var _socket = require('./socket');
@@ -271,7 +271,7 @@ module.exports = {
     });
   })
 };
-},{"./socket":7,"./userId":4,"./checkformsubmited":9,"./markers":12}],2:[function(require,module,exports) {
+},{"./socket":5,"./userId":4,"./checkformsubmited":8,"./markers":11}],2:[function(require,module,exports) {
 'use strict';
 
 var _disconnected = require('./disconnected');
@@ -316,7 +316,7 @@ form.addEventListener('submit', function (e) {
   (0, _map.initMap)();
   e.preventDefault();
 });
-},{"./disconnected":10,"./map":11,"./userId":4,"./markers":12,"./socket":7,"./socketConnectionCheck":13,"./checkformsubmited":9}],3:[function(require,module,exports) {
+},{"./disconnected":9,"./map":10,"./userId":4,"./markers":11,"./socket":5,"./socketConnectionCheck":12,"./checkformsubmited":8}],3:[function(require,module,exports) {
 'use strict';
 
 var _checkformsubmited = require('./checkformsubmited');
@@ -340,7 +340,7 @@ module.exports = {
     }
   }
 };
-},{"./checkformsubmited":9}],5:[function(require,module,exports) {
+},{"./checkformsubmited":8}],6:[function(require,module,exports) {
 'use strict';
 
 var _markers = require('./markers');
@@ -363,7 +363,7 @@ module.exports = {
     });
   })
 };
-},{"./markers":12,"./socket":7,"./disconnected":10}],6:[function(require,module,exports) {
+},{"./markers":11,"./socket":5,"./disconnected":9}],7:[function(require,module,exports) {
 'use strict';
 
 var _userId = require('./userId');
@@ -437,7 +437,7 @@ db.collection('geolocation').onSnapshot(function (snapshot) {
     });
   }
 });
-},{"./formhandle":2,"./success":3,"./userId":4,"./socket":7,"./handledisconnect":5,"./geolocationUpdate":6}],25:[function(require,module,exports) {
+},{"./formhandle":2,"./success":3,"./userId":4,"./socket":5,"./handledisconnect":6,"./geolocationUpdate":7}],18:[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 
@@ -464,9 +464,9 @@ module.bundle.Module = Module;
 
 var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
-  var hostname = '' || location.hostname;
+  var hostname = undefined || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + '53252' + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + '50244' + '/');
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
 
@@ -607,5 +607,5 @@ function hmrAccept(bundle, id) {
     return hmrAccept(global.parcelRequire, id);
   });
 }
-},{}]},{},[25,1], null)
+},{}]},{},[18,1], null)
 //# sourceMappingURL=/index.map
